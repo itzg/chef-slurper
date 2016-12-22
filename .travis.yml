@@ -1,0 +1,25 @@
+language: go
+go:
+  - '1.7'
+
+install:
+  - go get -v github.com/mitchellh/gox
+  - cd $GOPATH/src/github.com/mitchellh/gox && git checkout v0.3.0 && go install && cd -
+
+script:
+  - go test ./...
+  - gox
+        -osarch "linux/386 linux/amd64 darwin/amd64 windows/amd64"
+        -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
+
+deploy:
+  provider: releases
+  api_key: "$GITHUB_OAUTH_TOKEN"
+  file:
+    - "dist/ansible-chef_linux_386"
+    - "dist/ansible-chef_linux_amd64"
+    - "dist/ansible-chef_darwin_amd64"
+    - "dist/ansible-chef_windows_amd64"
+  skip_cleanup: true
+  on:
+    tags: true
