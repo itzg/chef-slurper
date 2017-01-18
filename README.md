@@ -16,3 +16,12 @@ Flags:
 
 Use "chef-slurper [command] --help" for more information about a command.
 ```
+
+## Installation
+
+### Mac OS
+
+```
+curl -sSL -o chef-slurper https://github.com/itzg/chef-slurper/releases/download/v1.0/chef-slurper_darwin_amd64
+chmod +x chef-slurper
+```
