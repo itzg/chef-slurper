@@ -20,7 +20,6 @@ after_success:
   - gox
         -osarch "linux/386 linux/amd64 darwin/amd64 windows/amd64"
         -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}"
-  - ls dist
 
 deploy:
   provider: releases
@@ -29,7 +28,7 @@ deploy:
     - "dist/chef-slurper_linux_386"
     - "dist/chef-slurper_linux_amd64"
     - "dist/chef-slurper_darwin_amd64"
-    - "dist/chef-slurper_windows_amd64"
+    - "dist/chef-slurper_windows_amd64.exe"
   skip_cleanup: true
   on:
     tags: true
