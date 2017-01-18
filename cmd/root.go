@@ -1,4 +1,4 @@
-// Copyright © 2016 Geoff Bourne <itzgeoff@gmail.com>
+// Copyright © 2017 Geoff Bourne <itzgeoff@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,25 +18,22 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
 
-// RootCmd represents the base command when called without any subcommands
-var RootCmd = &cobra.Command{
-	Use:   "ansible-chef",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+const (
+	FlagNodes           = "nodes"
+	FlagStripRolePrefix = "strip-role-prefix"
+)
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-// Uncomment the following line if your bare application
-// has an action associated with it:
-//	Run: func(cmd *cobra.Command, args []string) { },
+var RootCmd = &cobra.Command{
+	Use:   "chef-slurper",
+	Short: "A utility for slurping Chef definition files and showing/exporting info from those",
+	Long:  ``,
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.
@@ -51,14 +48,10 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports Persistent Flags, which, if defined here,
-	// will be global for your application.
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chef-slurper.yaml)")
 
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.ansible-chef.yaml)")
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	RootCmd.PersistentFlags().StringP(FlagNodes, "n", "./nodes", "Location of your Chef nodes directory")
+	RootCmd.PersistentFlags().StringArray(FlagStripRolePrefix, []string{}, "Prefixes to remove from role identifiers")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -67,12 +60,19 @@ func initConfig() {
 		viper.SetConfigFile(cfgFile)
 	}
 
-	viper.SetConfigName(".ansible-chef") // name of config file (without extension)
-	viper.AddConfigPath("$HOME")  // adding home directory as first search path
-	viper.AutomaticEnv()          // read in environment variables that match
+	viper.SetConfigName(".chef-slurper") // name of config file (without extension)
+	viper.AddConfigPath("$HOME")         // adding home directory as first search path
+	viper.AutomaticEnv()                 // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func reportFatalFlagError(flag string, err error) {
+	logrus.WithFields(logrus.Fields{
+		"flag": flag,
+		"err":  err,
+	}).Fatal("Failed to access flag")
 }

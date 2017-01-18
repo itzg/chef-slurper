@@ -1,4 +1,4 @@
-// Copyright © 2016 Geoff Bourne <itzgeoff@gmail.com>
+// Copyright © 2017 Geoff Bourne <itzgeoff@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package ops
+package core
 
 type BaseType struct {
 	JsonClass string `json:"json_class"`
@@ -29,4 +29,3 @@ type ChefNode struct {
 	} `json:"normal"`
 	RunList []string `json:"run_list"`
 }
-

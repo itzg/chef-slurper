@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/itzg/ansible-chef/cmd"
+import "github.com/itzg/chef-slurper/cmd"
 
 func main() {
 	cmd.Execute()

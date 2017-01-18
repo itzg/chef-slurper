@@ -1,4 +1,4 @@
-package: github.com/itzg/ansible-chef
+package: github.com/itzg/chef-slurper
 import:
 - package: github.com/spf13/cobra
 - package: github.com/spf13/viper
