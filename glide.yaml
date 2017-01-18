@@ -2,3 +2,5 @@ package: github.com/itzg/chef-slurper
 import:
 - package: github.com/spf13/cobra
 - package: github.com/spf13/viper
+- package: github.com/Sirupsen/logrus
+  version: ^0.11.0
