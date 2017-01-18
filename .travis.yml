@@ -25,10 +25,10 @@ deploy:
   provider: releases
   api_key: "$GITHUB_OAUTH_TOKEN"
   file:
-    - "dist/ansible-chef_linux_386"
-    - "dist/ansible-chef_linux_amd64"
-    - "dist/ansible-chef_darwin_amd64"
-    - "dist/ansible-chef_windows_amd64"
+    - "dist/chef-slurper_linux_386"
+    - "dist/chef-slurper_linux_amd64"
+    - "dist/chef-slurper_darwin_amd64"
+    - "dist/chef-slurper_windows_amd64"
   skip_cleanup: true
   on:
     tags: true
