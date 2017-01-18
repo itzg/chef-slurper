@@ -153,8 +153,7 @@ func (nodesByRole NodesByRole) organizeNodeIntoRoles(node *ChefNode, stripRolePr
 
 		if matches[1] == RunListRole {
 			role := applyRolePrefixStripping(matches[2], stripRolePrefixes)
-			entry := nodesByRole[role]
-			entry = append(entry, node)
+			entry := append(nodesByRole[role], node)
 			nodesByRole[role] = entry
 		}
 
